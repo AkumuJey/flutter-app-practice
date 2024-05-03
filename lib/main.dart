@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +29,16 @@ class MyApp extends StatelessWidget {
 
 class MyAppState extends ChangeNotifier {
   var current = WordPair.random();
+  var favorites = <WordPair>[];
+
+  void toggleFavorite() {
+    if (favorites.contains(current)) {
+      favorites.remove(current)
+    } else {
+      favorites.add(current)
+    }
+    notifyListeners();
+  }
 
   void getNext() {
     current = WordPair.random();
@@ -80,7 +92,7 @@ class BigCard extends StatelessWidget {
         child: Text(
           pair.asLowerCase,
           style: style,
-          semanticsLabel: "${pair.first}gdg ${pair.second}",
+          semanticsLabel: "${pair.first} ${pair.second}",
         ),
       ),
     );
